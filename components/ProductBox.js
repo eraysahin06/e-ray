@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
-import CartIcon from './icons/CartIcon';
+import Button, { ButtonStyle } from './Button';
 import Link from 'next/link';
 import { CartContext } from './CartContext';
+import { primary } from '@/lib/colors';
+import FlyingButton from './FlyingButton';
 
 const ProductWrapper = styled.div``;
 
@@ -72,9 +73,9 @@ const ProductBox = ({ _id, title, description, price, images }) => {
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>${price}</Price>
-          <Button block="true" onClick={() => addProduct(_id)} primary outline>
+          <FlyingButton _id={_id} src={images?.[0]}>
             Add to Cart
-          </Button>
+          </FlyingButton>
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>

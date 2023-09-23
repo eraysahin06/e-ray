@@ -1,6 +1,7 @@
 import Button from '@/components/Button';
 import { CartContext } from '@/components/CartContext';
 import Center from '@/components/Center';
+import FlyingButton from '@/components/FlyingButton';
 import Header from '@/components/Header';
 import ProductImages from '@/components/ProductImages';
 import Title from '@/components/Title';
@@ -49,9 +50,13 @@ const ProductPage = ({ product }) => {
             <PriceRow>
               <Price>${product.price}</Price>
               <div>
-                <Button onClick={() => addProduct(product._id)} primary="true">
+                <FlyingButton
+                  main="true"
+                  _id={product._id}
+                  src={product.images?.[0]}
+                >
                   <CartIcon /> Add to Cart
-                </Button>
+                </FlyingButton>
               </div>
             </PriceRow>
           </div>
