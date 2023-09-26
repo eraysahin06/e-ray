@@ -1,22 +1,37 @@
-import Button from '@/components/Button';
-import { CartContext } from '@/components/CartContext';
-import Center from '@/components/Center';
 import Header from '@/components/Header';
-import Input from '@/components/Input';
-import Table from '@/components/Table';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import { RevealWrapper } from 'next-reveal';
-import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Center from '@/components/Center';
+import Button from '@/components/Button';
+import { useContext, useEffect, useState } from 'react';
+import { CartContext } from '@/components/CartContext';
+import axios from 'axios';
+import Table from '@/components/Table';
+import Input from '@/components/Input';
+import { RevealWrapper } from 'next-reveal';
+import { useSession } from 'next-auth/react';
 
 const ColumnsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1.2fr;
-  gap: 40px;
-  margin-top: 40px;
+  grid-template-columns: 1fr;
   @media screen and (min-width: 768px) {
     grid-template-columns: 1.2fr 0.8fr;
+  }
+  gap: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  table thead tr th:nth-child(3),
+  table tbody tr td:nth-child(3),
+  table tbody tr.subtotal td:nth-child(2) {
+    text-align: right;
+  }
+  table tr.subtotal td {
+    padding: 15px 0;
+  }
+  table tbody tr.subtotal td:nth-child(2) {
+    font-size: 1.4rem;
+  }
+  tr.total td {
+    font-weight: bold;
   }
 `;
 
@@ -28,6 +43,9 @@ const Box = styled.div`
 
 const ProductInfoCell = styled.td`
   padding: 10px 0;
+  button {
+    padding: 0 !important;
+  }
 `;
 
 const ProductImageBox = styled.div`
@@ -43,7 +61,6 @@ const ProductImageBox = styled.div`
     max-width: 60px;
     max-height: 60px;
   }
-
   @media screen and (min-width: 768px) {
     padding: 10px;
     width: 100px;
@@ -60,7 +77,7 @@ const QuantityLabel = styled.span`
   display: block;
   @media screen and (min-width: 768px) {
     display: inline-block;
-    padding: 0 10px;
+    padding: 0 6px;
   }
 `;
 
@@ -69,19 +86,19 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
-const CartPage = () => {
-  const { data: session } = useSession();
+export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
+  const { data: session } = useSession();
   const [products, setProducts] = useState([]);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [country, setCountry] = useState('');
-
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [shippingFee, setShippingFee] = useState(null);
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios.post('/api/cart', { ids: cartProducts }).then((response) => {
@@ -91,18 +108,18 @@ const CartPage = () => {
       setProducts([]);
     }
   }, [cartProducts]);
-
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
     }
-
     if (window?.location.href.includes('success')) {
       setIsSuccess(true);
       clearCart();
     }
+    axios.get('/api/settings?name=shippingFee').then((res) => {
+      setShippingFee(res.data.value);
+    });
   }, []);
-
   useEffect(() => {
     if (!session) {
       return;
@@ -116,15 +133,12 @@ const CartPage = () => {
       setCountry(response.data.country);
     });
   }, [session]);
-
   function moreOfThisProduct(id) {
     addProduct(id);
   }
-
   function lessOfThisProduct(id) {
     removeProduct(id);
   }
-
   async function goToPayment() {
     const response = await axios.post('/api/checkout', {
       name,
@@ -139,12 +153,10 @@ const CartPage = () => {
       window.location = response.data.url;
     }
   }
-
-  let total = 0;
-
+  let productsTotal = 0;
   for (const productId of cartProducts) {
     const price = products.find((p) => p._id === productId)?.price || 0;
-    total += price;
+    productsTotal += price;
   }
 
   if (isSuccess) {
@@ -162,7 +174,6 @@ const CartPage = () => {
       </>
     );
   }
-
   return (
     <>
       <Header />
@@ -171,7 +182,7 @@ const CartPage = () => {
           <RevealWrapper delay={0}>
             <Box>
               <h2>Cart</h2>
-              {!cartProducts?.length && <div>Your Cart is Empty</div>}
+              {!cartProducts?.length && <div>Your cart is empty</div>}
               {products?.length > 0 && (
                 <Table>
                   <thead>
@@ -182,16 +193,12 @@ const CartPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product, index) => (
-                      <tr key={index}>
+                    {products.map((product) => (
+                      <tr key={product._id}>
                         <ProductInfoCell>
                           <ProductImageBox>
-                            <img
-                              src={product.images[0]}
-                              alt="product in the cart photo"
-                            />
+                            <img src={product.images[0]} alt="" />
                           </ProductImageBox>
-
                           {product.title}
                         </ProductInfoCell>
                         <td>
@@ -206,7 +213,6 @@ const CartPage = () => {
                                 .length
                             }
                           </QuantityLabel>
-
                           <Button
                             onClick={() => moreOfThisProduct(product._id)}
                           >
@@ -220,10 +226,17 @@ const CartPage = () => {
                         </td>
                       </tr>
                     ))}
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td>${total}</td>
+                    <tr className="subtotal">
+                      <td colSpan={2}>Products</td>
+                      <td>${productsTotal}</td>
+                    </tr>
+                    <tr className="subtotal">
+                      <td colSpan={2}>Shipping</td>
+                      <td>${shippingFee}</td>
+                    </tr>
+                    <tr className="subtotal total">
+                      <td colSpan={2}>Total</td>
+                      <td>${productsTotal + parseInt(shippingFee || 0)}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -233,54 +246,52 @@ const CartPage = () => {
           {!!cartProducts?.length && (
             <RevealWrapper delay={100}>
               <Box>
-                <h2>Order Information</h2>
-
+                <h2>Order information</h2>
                 <Input
-                  name="name"
                   type="text"
                   placeholder="Name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  name="name"
+                  onChange={(ev) => setName(ev.target.value)}
                 />
                 <Input
-                  name="email"
                   type="text"
-                  placeholder="Email Address"
+                  placeholder="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
+                  onChange={(ev) => setEmail(ev.target.value)}
                 />
                 <CityHolder>
                   <Input
-                    name="city"
                     type="text"
                     placeholder="City"
                     value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    name="city"
+                    onChange={(ev) => setCity(ev.target.value)}
                   />
                   <Input
-                    name="postalCode"
                     type="text"
                     placeholder="Postal Code"
                     value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
+                    name="postalCode"
+                    onChange={(ev) => setPostalCode(ev.target.value)}
                   />
                 </CityHolder>
                 <Input
-                  name="streetAddress"
                   type="text"
                   placeholder="Street Address"
                   value={streetAddress}
-                  onChange={(e) => setStreetAddress(e.target.value)}
+                  name="streetAddress"
+                  onChange={(ev) => setStreetAddress(ev.target.value)}
                 />
                 <Input
-                  name="country"
                   type="text"
                   placeholder="Country"
                   value={country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  name="country"
+                  onChange={(ev) => setCountry(ev.target.value)}
                 />
-
-                <Button black="true" block="true" onClick={goToPayment}>
+                <Button black block onClick={goToPayment}>
                   Continue to payment
                 </Button>
               </Box>
@@ -290,6 +301,4 @@ const CartPage = () => {
       </Center>
     </>
   );
-};
-
-export default CartPage;
+}

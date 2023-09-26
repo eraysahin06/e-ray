@@ -1,16 +1,18 @@
-import Featured from '@/components/Featured';
 import Header from '@/components/Header';
-import NewProducts from '@/components/NewProducts';
-import { mongooseConnect } from '@/lib/mongoose';
+import Featured from '@/components/Featured';
 import { Product } from '@/models/Product';
+import { mongooseConnect } from '@/lib/mongoose';
+import NewProducts from '@/components/NewProducts';
 import { WishedProduct } from '@/models/WishedProduct';
 import { getServerSession } from 'next-auth';
-import React from 'react';
-import { authOptions } from './api/auth/[...nextauth]';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { Setting } from '@/models/Setting';
 
-const HomePage = ({ featuredProduct, newProducts, wishedNewProducts }) => {
-  console.log({ newProducts });
-
+export default function HomePage({
+  featuredProduct,
+  newProducts,
+  wishedNewProducts,
+}) {
   return (
     <div>
       <Header />
@@ -18,27 +20,26 @@ const HomePage = ({ featuredProduct, newProducts, wishedNewProducts }) => {
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
     </div>
   );
-};
-
-export default HomePage;
+}
 
 export async function getServerSideProps(ctx) {
-  const featuredProductId = '650e06b872ddc80bcef48960';
   await mongooseConnect();
+  const featuredProductSetting = await Setting.findOne({
+    name: 'featuredProductId',
+  });
+  const featuredProductId = featuredProductSetting.value;
   const featuredProduct = await Product.findById(featuredProductId);
   const newProducts = await Product.find({}, null, {
     sort: { _id: -1 },
     limit: 10,
   });
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
-
   const wishedNewProducts = session?.user
     ? await WishedProduct.find({
         userEmail: session.user.email,
         product: newProducts.map((p) => p._id.toString()),
       })
     : [];
-
   return {
     props: {
       featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),

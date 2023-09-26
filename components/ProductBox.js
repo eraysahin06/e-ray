@@ -77,7 +77,7 @@ const WishlistButton = styled.button`
   right: 0;
   background: transparent;
   cursor: pointer;
-  color: ${(props) => (props.wished ? 'red' : 'black')};
+  color: ${(props) => (props.wished ? '#FFD300' : 'black')};
   svg {
     width: 16px;
   }
