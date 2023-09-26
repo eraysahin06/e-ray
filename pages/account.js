@@ -9,17 +9,27 @@ import { RevealWrapper } from 'next-reveal';
 import Input from '@/components/Input';
 import axios from 'axios';
 import Spinner from '@/components/Spinner';
+import ProductBox from '@/components/ProductBox';
 
 const ColsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 40px;
   margin: 40px 0;
+  p {
+    margin: 5px;
+  }
 `;
 
 const CityHolder = styled.div`
   display: flex;
   gap: 5px;
+`;
+
+const WishedProductsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
 `;
 
 const AccountPage = () => {
@@ -30,7 +40,10 @@ const AccountPage = () => {
   const [postalCode, setPostalCode] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [country, setCountry] = useState('');
-  const [loaded, setLoaded] = useState(false);
+  const [addressLoaded, setAddressLoaded] = useState(true);
+  const [wishlistLoaded, setWishlistLoaded] = useState(true);
+  const [wishedProducts, setWishedProducts] = useState([]);
+
   async function logout() {
     await signOut({
       callbackUrl: process.env.NEXT_PUBLIC_URL,
@@ -47,6 +60,12 @@ const AccountPage = () => {
   }
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+    setAddressLoaded(false);
+    setWishlistLoaded(false);
+
     axios.get('/api/address').then((response) => {
       setName(response.data.name);
       setEmail(response.data.email);
@@ -54,9 +73,20 @@ const AccountPage = () => {
       setPostalCode(response.data.postalCode);
       setStreetAddress(response.data.streetAddress);
       setCountry(response.data.country);
-      setLoaded(true);
+      setAddressLoaded(true);
     });
-  }, []);
+
+    axios.get('/api/wishlist').then((response) => {
+      setWishedProducts(response.data.map((wp) => wp.product));
+      setWishlistLoaded(true);
+    });
+  }, [session]);
+
+  function productRemovedFromWishList(idToRemove) {
+    setWishedProducts((products) => {
+      return [...products.filter((p) => p._id.toString() !== idToRemove)];
+    });
+  }
 
   return (
     <>
@@ -67,15 +97,39 @@ const AccountPage = () => {
             <RevealWrapper delay={0}>
               <WhiteBox>
                 <h2>Wishlist</h2>
+                {!wishlistLoaded && <Spinner fullWidth={`true`} />}
+                {wishlistLoaded && (
+                  <>
+                    <WishedProductsGrid>
+                      {wishedProducts.length > 0 &&
+                        wishedProducts.map((wp) => (
+                          <ProductBox
+                            key={wp._id}
+                            {...wp}
+                            wished={true}
+                            onRemoveFromWishlist={productRemovedFromWishList}
+                          />
+                        ))}
+                    </WishedProductsGrid>
+                    {wishedProducts.length === 0 && (
+                      <>
+                        {session && <p>Your wishlist is empty.</p>}
+                        {!session && (
+                          <p>Login to add products to your wishlist.</p>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
               </WhiteBox>
             </RevealWrapper>
           </div>
           <div>
             <RevealWrapper delay={100}>
               <WhiteBox>
-                <h2>Account Details</h2>
-                {!loaded && <Spinner fullWidth={true} />}
-                {loaded && (
+                <h2>{session ? 'Account Details' : 'Login'}</h2>
+                {!addressLoaded && <Spinner fullWidth={true} />}
+                {addressLoaded && session && (
                   <>
                     <Input
                       name="name"
@@ -135,7 +189,7 @@ const AccountPage = () => {
                 )}
                 {!session && (
                   <Button primary="true" onClick={login}>
-                    Login
+                    Sign in with Google
                   </Button>
                 )}
               </WhiteBox>
