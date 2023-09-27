@@ -2,7 +2,6 @@
 
 Welcome to E-RAY Diecast Store, a personal portfolio project showcasing my skills in web development. This project simulates an online store for diecast cars and is built using Next.js, MongoDB, Stripe API, Amazon Web Services (S3 Buckets for Images), Google Authentication, and Styled Components.
 
-![E-RAY Diecast Store]
 <img src="https://i.ibb.co/w4ZVrVf/Eray-Desktop.jpg" alt="Eray-Desktop" border="0">
 
 Visit the live project: [E-RAY Diecast Store](https://e-ray.vercel.app/)
