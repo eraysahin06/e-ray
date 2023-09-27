@@ -1,38 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-RAY Diecast Store
 
-## Getting Started
+Welcome to E-RAY Diecast Store, a personal portfolio project showcasing my skills in web development. This project simulates an online store for diecast cars and is built using Next.js, MongoDB, Stripe API, Amazon Web Services (S3 Buckets for Images), Google Authentication, and Styled Components.
 
-First, run the development server:
+<img src="https://i.ibb.co/w4ZVrVf/Eray-Desktop.jpg" alt="Eray-Desktop" border="0">
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Visit the live project: [E-RAY Diecast Store](https://e-ray.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Table of Contents
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- [About](#about)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Usage](#usage)
+- [Contact](#contact)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## About
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+E-RAY Diecast Store is a personal project created to showcase my web development skills. While it simulates an online store for diecast cars, it primarily serves as a portfolio piece to demonstrate my proficiency in various technologies and tools.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- **Interactive User Interface**: Explore a catalogue of diecast cars with an intuitive and visually appealing design.
+- **Authentication**: Securely log in with Google Authentication.
+- **Shopping Cart**: Add and manage items in a shopping cart.
+- **Categories Page**: See all categories and all products that belong to those categories.
+- **Account Page**: Manage your Account Details, See your orders, See your wishlist (favourite) products.
+- **Payment Processing**: Simulate the checkout process using the Stripe API. You can use this fake card number on the checkout page to create a successful order: 4242 4242 4242 4242
+- **Image Storage**: Efficiently store and serve product images via Amazon S3 Buckets.
+- **Responsive Design**: Ensure a seamless experience on various devices with Styled Components.
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- MongoDB
+- Stripe API
+- Amazon Web Services (AWS S3)
+- Google Authentication
+- Styled Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+1. Visit the live project: [E-RAY Diecast Store](https://e-ray.vercel.app/).
+2. Sign in with Google, explore the features, browse diecast cars, and simulate the shopping experience.
+3. This project is for demonstration purposes only and does not involve actual purchases.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you have any questions or would like to get in touch, you can reach me via [email](mailto:eraysahinmoon@gmail.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/eraysahin06/).
+
+Thank you for visiting E-RAY Diecast Store!
