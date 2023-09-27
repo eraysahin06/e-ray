@@ -203,6 +203,9 @@ export default function CartPage() {
                         </ProductInfoCell>
                         <td>
                           <Button
+                            size="sm"
+                            outline="true"
+                            white="true"
                             onClick={() => lessOfThisProduct(product._id)}
                           >
                             -
@@ -214,6 +217,9 @@ export default function CartPage() {
                             }
                           </QuantityLabel>
                           <Button
+                            size="sm"
+                            outline="true"
+                            white="true"
                             onClick={() => moreOfThisProduct(product._id)}
                           >
                             +

@@ -87,6 +87,17 @@ export const ButtonStyle = css`
         height: 20px;
       }
     `};
+
+  ${(props) =>
+    props.size === 'sm' &&
+    css`
+      font-size: 0.7rem;
+      padding: 4px 5px;
+
+      svg {
+        height: 20px;
+      }
+    `};
 `;
 
 const StyledButton = styled.button`
