@@ -42,13 +42,21 @@ const CategoryWrapper = styled.div`
 
 const ShowAllSquare = styled(Link)`
   background-color: #ddd;
-  height: 160px;
+  height: 30px;
+  width: 120px;
   border-radius: 10px;
   align-items: center;
   display: flex;
   justify-content: center;
   color: #555;
   text-decoration: none;
+`;
+
+const ShowAllContainer = styled.div`
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 `;
 
 export default function CategoriesPage({
@@ -75,9 +83,11 @@ export default function CategoriesPage({
                 </RevealWrapper>
               ))}
               <RevealWrapper delay={categoriesProducts[cat._id].length * 50}>
-                <ShowAllSquare href={'/category/' + cat._id}>
-                  &rarr; Show All
-                </ShowAllSquare>
+                <ShowAllContainer>
+                  <ShowAllSquare href={'/category/' + cat._id}>
+                    &rarr; Show All
+                  </ShowAllSquare>
+                </ShowAllContainer>
               </RevealWrapper>
             </CategoryGrid>
           </CategoryWrapper>
