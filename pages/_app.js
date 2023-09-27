@@ -1,5 +1,6 @@
 import { CartContextProvider } from '@/components/CartContext';
 import { SessionProvider } from 'next-auth/react';
+import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -29,6 +30,9 @@ export default function App({
 }) {
   return (
     <>
+      <Head>
+        <title>E-ray Diecast Store</title>
+      </Head>
       <GlobalStyles />
       <SessionProvider session={session}>
         <CartContextProvider>

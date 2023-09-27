@@ -9,6 +9,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Setting } from '@/models/Setting';
 import Footer from '@/components/Footer';
 
+
 export default function HomePage({
   featuredProduct,
   newProducts,
@@ -17,6 +18,7 @@ export default function HomePage({
   return (
     <div>
       <Header />
+
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
       <Footer />
