@@ -7,8 +7,8 @@ import FlyingButton from './FlyingButton';
 import { RevealWrapper } from 'next-reveal';
 
 const Bg = styled.div`
-  background-color: #222;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   padding: 50px 0;
 `;
 
@@ -96,17 +96,12 @@ const Featured = ({ product }) => {
                   <ButtonsWrapper>
                     <ButtonLink
                       href={'/product/' + product._id}
-                      outline={1}
-                      white={1}
+                      outline={'true'}
+                      white={'true'}
                     >
                       Read more
                     </ButtonLink>
-                    <FlyingButton
-                      white="true"
-                      _id={product._id}
-                      src={product.images?.[0]}
-                    >
-                      {' '}
+                    <FlyingButton _id={product._id} src={product.images?.[0]}>
                       <CartIcon />
                       Add to cart
                     </FlyingButton>

@@ -7,13 +7,14 @@ import BarsIcon from './icons/Bars';
 import SearchIcon from './icons/SearchIcon';
 
 const StyledHeader = styled.header`
-  background-color: #222;
+  background-color: #1d9ce8;
   position: sticky;
   top: 0;
   z-index: 10;
 `;
 
 const Logo = styled(Link)`
+  font-weight: 700;
   color: #fff;
   text-decoration: none;
   position: relative;
@@ -35,7 +36,7 @@ const StyledNav = styled.nav`
   left: 0;
   right: 0;
   padding: 70px 20px 20px;
-  background-color: #222;
+  background-color: #1d9ce8;
   @media screen and (min-width: 768px) {
     display: flex;
     position: static;
@@ -45,7 +46,7 @@ const StyledNav = styled.nav`
 
 const NavLink = styled(Link)`
   display: block;
-  color: #aaa;
+  color: #fff;
   text-decoration: none;
   min-width: 30px;
   padding: 10px 0;
@@ -79,8 +80,8 @@ const SideIcons = styled.div`
     min-width: 20px;
     color: #fff;
     svg {
-      width: 14px;
-      height: 14px;
+      width: 18px;
+      height: 18px;
     }
   }
 `;
@@ -93,7 +94,7 @@ const Header = () => {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={'/'}>E-ray</Logo>
+          <Logo href={'/'}>E - RAY</Logo>
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={'/'}>Home</NavLink>
             <NavLink href={'/products'}>All products</NavLink>

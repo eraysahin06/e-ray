@@ -4,13 +4,12 @@ import Center from './Center';
 import ProductsGrid from './ProductsGrid';
 
 const Title = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 30px 0 20px;
   font-weight: normal;
 `;
 
 const NewProducts = ({ products, wishedProducts }) => {
-  console.log({ wishedProducts });
   return (
     <Center>
       <Title>New Products</Title>
