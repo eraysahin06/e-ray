@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledInput = styled.input`
+const StyledArea = styled.textarea`
   width: 100%;
   padding: 5px;
   margin-bottom: 5px;
@@ -11,8 +11,8 @@ const StyledInput = styled.input`
   font-family: inherit;
 `;
 
-const Input = (props) => {
-  return <StyledInput {...props} />;
+const Textarea = (props) => {
+  return <StyledArea {...props} />;
 };
 
-export default Input;
+export default Textarea;

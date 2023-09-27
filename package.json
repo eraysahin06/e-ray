@@ -21,7 +21,6 @@
     "next-reveal": "^1.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-flying-item": "^1.1.2",
     "react-spinners": "^0.13.8",
     "stripe": "^13.7.0",
     "styled-components": "^6.0.8"
