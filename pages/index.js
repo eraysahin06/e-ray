@@ -7,6 +7,7 @@ import { WishedProduct } from '@/models/WishedProduct';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Setting } from '@/models/Setting';
+import Footer from '@/components/Footer';
 
 export default function HomePage({
   featuredProduct,
@@ -18,6 +19,7 @@ export default function HomePage({
       <Header />
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
+      <Footer />
     </div>
   );
 }
