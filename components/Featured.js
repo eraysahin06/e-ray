@@ -23,7 +23,7 @@ const Title = styled.h1`
 `;
 
 const Desc = styled.p`
-  color: #aaa;
+  color: #555;
   font-size: 0.8rem;
 `;
 
@@ -99,7 +99,7 @@ const Featured = ({ product }) => {
                       outline={'true'}
                       white={'true'}
                     >
-                      Read more
+                      View Product
                     </ButtonLink>
                     <FlyingButton _id={product._id} src={product.images?.[0]}>
                       <CartIcon />

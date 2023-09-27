@@ -12,7 +12,8 @@ const FlyingButtonWrapper = styled.div`
         ? `  background-color: ${primary};
     color: #fff;`
         : `   background-color: transparent;
-    border: 1px solid ${primary};
+    border: 2px solid ${primary};
+    font-weight: bold;
     color: ${primary};`}
 
     ${(props) =>

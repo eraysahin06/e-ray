@@ -12,7 +12,7 @@ const Title = styled.h2`
 const NewProducts = ({ products, wishedProducts }) => {
   return (
     <Center>
-      <Title>New Products</Title>
+      <Title>Latest Arrivals</Title>
       <ProductsGrid products={products} wishedProducts={wishedProducts} />
     </Center>
   );

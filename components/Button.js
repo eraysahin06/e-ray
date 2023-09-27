@@ -29,9 +29,9 @@ export const ButtonStyle = css`
     props.white &&
     props.outline &&
     css`
-      background-color: #000;
+      background-color: #1d9ce8;
       color: #fff;
-      border: 1px solid #000;
+      border: 1px solid #1d9ce8;
     `}
 
 

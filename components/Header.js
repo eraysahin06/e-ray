@@ -5,20 +5,14 @@ import Center from './Center';
 import { CartContext } from './CartContext';
 import BarsIcon from './icons/Bars';
 import SearchIcon from './icons/SearchIcon';
+import LogoIcon from './icons/LogoIcon';
+import { primary } from '@/lib/colors';
 
 const StyledHeader = styled.header`
   background-color: #1d9ce8;
   position: sticky;
   top: 0;
   z-index: 10;
-`;
-
-const Logo = styled(Link)`
-  font-weight: 700;
-  color: #fff;
-  text-decoration: none;
-  position: relative;
-  z-index: 3;
 `;
 
 const Wrapper = styled.div`
@@ -45,16 +39,27 @@ const StyledNav = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   text-decoration: none;
   min-width: 30px;
-  padding: 10px 0;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  height: 30px;
+
   svg {
     height: 20px;
   }
   @media screen and (min-width: 768px) {
     padding: 0;
+  }
+  &:hover {
+    background-color: ${primary}; /* Change the background color on hover */
+    color: #fff; /* Change the text color on hover */
+    transition: background-color 0.1s ease; /* Add a smooth transition */
   }
 `;
 
@@ -86,6 +91,22 @@ const SideIcons = styled.div`
   }
 `;
 
+const Logo = styled(Link)`
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  z-index: 3;
+`;
+
+const StyledLogo = styled(Logo)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 110px;
+`;
+
 const Header = () => {
   const { cartProducts } = useContext(CartContext);
   const [mobileNavActive, setMobileNavActive] = useState(false);
@@ -94,7 +115,9 @@ const Header = () => {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={'/'}>E - RAY</Logo>
+          <StyledLogo href={'/'}>
+            <LogoIcon /> E - RAY
+          </StyledLogo>
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={'/'}>Home</NavLink>
             <NavLink href={'/products'}>All products</NavLink>
