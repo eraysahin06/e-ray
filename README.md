@@ -41,7 +41,7 @@ E-RAY Diecast Store is a personal project created to showcase my web development
 ## Usage
 
 1. Visit the live project: [E-RAY Diecast Store](https://e-ray.vercel.app/).
-2. Explore the features, browse diecast cars, and simulate the shopping experience.
+2. Sign in with Google, explore the features, browse diecast cars, and simulate the shopping experience.
 3. This project is for demonstration purposes only and does not involve actual purchases.
 
 ## Contact
